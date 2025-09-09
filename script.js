@@ -22,7 +22,7 @@ function setup() {
   if (colorPicker) {
     currentColor = colorPicker.value; 
     colorPicker.addEventListener('change', () => {
-      currentColor = colorPicker.value;
+    currentColor = colorPicker.value;
     });
   }
 
