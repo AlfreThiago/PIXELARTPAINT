@@ -10,12 +10,22 @@ var grid;
 var cols;
 var rows;
 var w = 20;
+var currentColor;
 
 function setup() {
   createCanvas(320, 320);
   cols = floor(width / w);
   rows = floor(height / w);
   grid = make2DArray(cols, rows);
+
+  const colorPicker = document.getElementById('colorPicker');
+  if (colorPicker) {
+    currentColor = colorPicker.value; 
+    colorPicker.addEventListener('change', () => {
+      currentColor = colorPicker.value;
+    });
+  }
+
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       grid[i][j] = new Cell(i, j, w);
@@ -32,29 +42,27 @@ function draw() {
   }
 }
 
-// Cell class
 class Cell {
   constructor(i, j, w) {
     this.i = i;
     this.j = j;
     this.w = w;
-    this.is_painted = false; // Add a property to track if the cell is painted
+    this.color = null; 
   }
 
-  // Method to draw the cell
   show() {
     var x = this.i * this.w;
     var y = this.j * this.w;
-    stroke(0); // Set the border color to black
-    if (this.is_painted) {
-      fill(0); // Fill the rectangle with black if it's painted
+    stroke(0);
+
+    if (this.color) {
+      fill(this.color);
     } else {
-      noFill(); // Don't fill the rectangle if it's not painted
+      noFill();
     }
     rect(x, y, this.w, this.w);
   }
 
-  // Method to check if the mouse is inside the cell
   contains(x, y) {
     return (
       x > this.i * this.w &&
@@ -64,12 +72,9 @@ class Cell {
     );
   }
 
-  // Method to change the cell's color
-  paint() {
-    if (this.is_painted) {
-        this.is_painted = false;
-    } else {
-    this.is_painted = true;
+  paint(newColor) {
+  if (this.color !== newColor) {
+    this.color = newColor;
   }
 }
 }
@@ -78,7 +83,7 @@ function mousePressed() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       if (grid[i][j].contains(mouseX, mouseY)) {
-        grid[i][j].paint();
+        grid[i][j].paint(currentColor); 
       }
     }
   }
