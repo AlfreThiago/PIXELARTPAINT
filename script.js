@@ -53,10 +53,11 @@ class Cell {
   show() {
     var x = this.i * this.w;
     var y = this.j * this.w;
-    stroke(0);
+    stroke(255);
 
     if (this.color) {
       fill(this.color);
+      stroke(this.color);
     } else {
       noFill();
     }
