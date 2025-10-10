@@ -1,4 +1,4 @@
-# PIXEL ART PAINT Program
+# PIXEL ART Program
 Work In Progress
 
 ## CREDITS
